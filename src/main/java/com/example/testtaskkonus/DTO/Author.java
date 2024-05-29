@@ -1,6 +1,7 @@
 package com.example.testtaskkonus.DTO;
 
 
+import com.example.testtaskkonus.entity.BookEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,5 +17,5 @@ public class Author {
 
     private UUID id;
     private String name;
-    private List<Book> authorBook;
+    private List<BookEntity> authorBooks;
 }

@@ -16,7 +16,7 @@ public interface BookService {
 
     void createBook(SaveBook saveBook);
 
-    void updateBook(UpdateBook updateBook);
+    void updateBook(UUID id, UpdateBook updateBook);
 
     void deleteBook(UUID id);
 }

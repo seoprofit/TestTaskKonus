@@ -3,6 +3,7 @@ package com.example.testtaskkonus.service;
 
 import com.example.testtaskkonus.DTO.SaveBook;
 import com.example.testtaskkonus.DTO.UpdateBook;
+import com.example.testtaskkonus.entity.AuthorEntity;
 import com.example.testtaskkonus.entity.BookEntity;
 import com.example.testtaskkonus.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
@@ -39,14 +40,21 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void updateBook(UpdateBook updateBook) {
-        BookEntity bookEntity = this.bookRepository.findById(UUID.fromString((String.valueOf((updateBook.getId()))))).orElse(new BookEntity());
-        bookEntity.setId(updateBook.getId());
-        bookEntity.setISBN(updateBook.getISBN());
-        bookEntity.setName(updateBook.getName());
-        this.bookRepository.save(bookEntity);
+    public void updateBook(UUID id, UpdateBook updateBook) {
+
+        if (bookRepository.findById(id).isPresent()) {
+            BookEntity bookEntity = this.bookRepository.findById(id).orElse(new BookEntity());
+            bookEntity.setBookAuthors(updateBook.getBookAuthors());
+            bookEntity.setName(updateBook.getName());
+            this.bookRepository.save(bookEntity);
+        } else {
+            BookEntity bookEntity = new BookEntity();
+            bookEntity.setBookAuthors(updateBook.getBookAuthors());
+            bookEntity.setName(updateBook.getName());
+            this.bookRepository.save(bookEntity);
 
 
+        }
     }
 
     @Override

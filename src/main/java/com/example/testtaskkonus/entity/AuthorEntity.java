@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
 
 import java.util.List;
@@ -22,7 +23,8 @@ public class AuthorEntity {
     private UUID id;
     @Column(name = "Name")
     private String name;
-@ManyToMany
+    @ManyToMany
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<BookEntity> authorBooks;
 
 

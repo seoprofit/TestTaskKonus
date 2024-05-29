@@ -1,5 +1,6 @@
 package com.example.testtaskkonus.DTO;
 
+import com.example.testtaskkonus.entity.BookEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,5 +15,5 @@ public class SaveAuthor {
 
     private String name;
     private Integer ISBN;
-    private List<Book> authorBooks;
+    private List<BookEntity> authorBooks;
 }

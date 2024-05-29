@@ -13,7 +13,7 @@ public interface AuthorService {
 
     void createAuthor(SaveAuthor author);
 
-    void updateAuthor(UpdateAuthor author);
+    void updateAuthor(UUID id, UpdateAuthor author);
 
     void deleteAuthor(UUID id);
 

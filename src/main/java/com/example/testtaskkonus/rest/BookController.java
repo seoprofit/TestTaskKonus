@@ -33,9 +33,9 @@ public class BookController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    @PatchMapping("update")
-    public ResponseEntity<?> updateBook(@RequestBody UpdateBook updateBook) {
-        this.bookService.updateBook(updateBook);
+    @PatchMapping("update/{id}")
+    public ResponseEntity<?> updateBook(@PathVariable UUID id, @RequestBody UpdateBook updateBook) {
+        this.bookService.updateBook(id, updateBook);
         return new ResponseEntity(HttpStatus.OK);
     }
 

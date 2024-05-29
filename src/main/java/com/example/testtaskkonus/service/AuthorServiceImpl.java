@@ -30,12 +30,20 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public void updateAuthor(UpdateAuthor updateAuthor) {
-        AuthorEntity authorEntity = this.authorRepository.findById(updateAuthor.getId()).orElse(new AuthorEntity());
-        authorEntity.setId(updateAuthor.getId());
-        authorEntity.setAuthorBooks(updateAuthor.getAuthorBooks());
-        authorEntity.setName(updateAuthor.getName());
-        this.authorRepository.save(authorEntity);
+    public void updateAuthor(UUID id, UpdateAuthor updateAuthor) {
+
+        if (authorRepository.findById(id).isPresent()) {
+            AuthorEntity authorEntity = this.authorRepository.findById(id).orElse(new AuthorEntity());
+            authorEntity.setAuthorBooks(updateAuthor.getAuthorBooks());
+            authorEntity.setName(updateAuthor.getName());
+            this.authorRepository.save(authorEntity);
+        } else {
+            AuthorEntity authorEntity = new AuthorEntity();
+            authorEntity.setAuthorBooks(updateAuthor.getAuthorBooks());
+            authorEntity.setName(updateAuthor.getName());
+            this.authorRepository.save(authorEntity);
+        }
+
     }
 
     @Override
