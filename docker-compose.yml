@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:13.15-bullseye
+    container_name: db-container
+    ports:
+      - 5432:5432
+    networks:
+      - libraryNetwork
+    environment:
+      - POSTGRES_USER=test_task_login
+      - POSTGRES_PASSWORD=test_task_pass
+      - POSTGRES_DB=library
+
+  library:
+    image: openjdk:17-oracle
+    container_name: api-library
+    depends_on:
+      - db
+    ports:
+      - 8080:8080
+    networks:
+      - libraryNetwork
+    volumes:
+      - /home/develop/Desktop/code/Java/TestTask/TestTaskKonus/target/TestTaskKonus-0.0.1-SNAPSHOT.jar:/opt/library.jar
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/library
+      - SPRING_DATASOURCE_USERNAME=test_task_login
+      - SPRING_DATASOURCE_PASSWORD=test_task_pass
+      - SPRING_DATASOURCE_DB=library
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    command: ["java","-jar","/opt/library.jar"]
+
+networks:
+  libraryNetwork:
+    driver: bridge
