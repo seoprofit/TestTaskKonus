@@ -2,6 +2,7 @@ package com.example.testtaskkonus.rest;
 
 import com.example.testtaskkonus.DTO.*;
 import com.example.testtaskkonus.entity.AuthorEntity;
+import com.example.testtaskkonus.entity.BookEntity;
 import com.example.testtaskkonus.service.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class AuthorController {
     private final AuthorService authorService;
 
     @GetMapping()
-    public List<AuthorEntity> getAllAuthors() {
+    public List<AuthorWithBooks> getAllAuthors() {
         return this.authorService.getAllAuthors();
     }
 
@@ -30,9 +31,10 @@ public class AuthorController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Author> getAuthorById(@PathVariable UUID id) {
-        Optional<AuthorEntity> book = this.authorService.getAuthorById(id);
-        return new ResponseEntity(book, HttpStatus.OK);
+    public ResponseEntity<AuthorWithBooks> getAuthorById(@PathVariable UUID id) {
+        Optional<AuthorEntity> author = this.authorService.getAuthorById(id);
+        AuthorWithBooks authorWithBooks = new AuthorWithBooks().fromModel(author.get());
+        return new ResponseEntity(authorWithBooks, HttpStatus.OK);
     }
 
 

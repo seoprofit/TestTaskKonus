@@ -1,12 +1,12 @@
 package com.example.testtaskkonus.service;
 
-import com.example.testtaskkonus.DTO.SaveAuthor;
-import com.example.testtaskkonus.DTO.UpdateAuthor;
+import com.example.testtaskkonus.DTO.*;
 import com.example.testtaskkonus.entity.AuthorEntity;
 import com.example.testtaskkonus.repository.AuthorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -17,14 +17,20 @@ public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
 
 
-    public List<AuthorEntity> getAllAuthors() {
-        return this.authorRepository.findAll();
+    public List<AuthorWithBooks> getAllAuthors() {
+        List <AuthorEntity> allAuthors = new ArrayList<>();
+        List <AuthorWithBooks> allAuthorsWithBooks = new ArrayList<>();
+
+        allAuthors.addAll(this.authorRepository.findAll());
+        for (AuthorEntity authorEntity: allAuthors) {
+            allAuthorsWithBooks.add(AuthorWithBooks.fromModel(authorEntity));
+        }
+        return allAuthorsWithBooks;
     }
 
     @Override
     public void createAuthor(SaveAuthor author) {
         AuthorEntity authorEntity = new AuthorEntity();
-        System.out.println(author.getName());
         authorEntity.setName(author.getName());
         this.authorRepository.save(authorEntity);
     }

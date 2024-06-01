@@ -1,9 +1,7 @@
 package com.example.testtaskkonus.rest;
 
-import com.example.testtaskkonus.DTO.Author;
-import com.example.testtaskkonus.DTO.Book;
-import com.example.testtaskkonus.DTO.SaveBook;
-import com.example.testtaskkonus.DTO.UpdateBook;
+import com.example.testtaskkonus.DTO.*;
+import com.example.testtaskkonus.entity.AuthorEntity;
 import com.example.testtaskkonus.entity.BookEntity;
 import com.example.testtaskkonus.service.BookService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +21,7 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping()
-    public List<BookEntity> getAllBooks() {
+    public List<BookWithAuthor> getAllBooks() {
         return this.bookService.getAllBooks();
     }
 
@@ -41,10 +39,12 @@ public class BookController {
 
 
     @GetMapping("{id}")
-    public ResponseEntity<Book> getBookById(@PathVariable UUID id) {
+    public ResponseEntity<BookWithAuthor> getBookById(@PathVariable UUID id) {
         Optional<BookEntity> book = this.bookService.getBookById(id);
-        return new ResponseEntity(book, HttpStatus.OK);
+        BookWithAuthor bookWithAuthor = new BookWithAuthor().fromModel(book.get());
+        return new ResponseEntity(bookWithAuthor, HttpStatus.OK);
     }
+
 
     @DeleteMapping("delete/{id}")
     public ResponseEntity<Book> deleteBookById(@PathVariable UUID id) {
