@@ -15,16 +15,19 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Author")
+@Table(name = "author")
 public class AuthorEntity {
     @Id
-    @Column(name = "Id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    @Column(name = "Name")
+    @Column(name = "name")
     private String name;
     @ManyToMany
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @JoinTable(name = "books_and_authors",
+            joinColumns = @JoinColumn(name = "book_id", referencedColumnName="id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName="id"))
     private List<BookEntity> authorBooks;
 
 
