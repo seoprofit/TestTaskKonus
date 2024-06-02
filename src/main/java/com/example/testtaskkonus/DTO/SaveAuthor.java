@@ -14,6 +14,5 @@ import java.util.UUID;
 public class SaveAuthor {
 
     private String name;
-    private Integer ISBN;
     private List<BookEntity> authorBooks;
 }

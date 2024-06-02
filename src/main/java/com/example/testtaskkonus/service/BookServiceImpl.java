@@ -10,11 +10,13 @@ import com.example.testtaskkonus.entity.BookEntity;
 import com.example.testtaskkonus.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,16 +28,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookWithAuthor> getAllBooks() {
-        List<BookEntity> allBooks = new ArrayList<>();
-        List<BookWithAuthor> allBooksWithAuthor = new ArrayList<>();
-        allBooks.addAll(this.bookRepository.findAll());
-        for (BookEntity bookEntity : allBooks) {
-            allBooksWithAuthor.add(BookWithAuthor.fromModel(bookEntity));
-        }
-        return allBooksWithAuthor;
+        return bookRepository.findAll().stream().map(BookWithAuthor::fromModel).collect(Collectors.toList());
+
     }
-
-
 
     public Optional<BookEntity> getBookById(UUID id) {
         return this.bookRepository.findById(id);
@@ -50,21 +45,15 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public void updateBook(UUID id, UpdateBook updateBook) {
+        BookEntity bookEntity = this.bookRepository.findById(id).orElse(new BookEntity());
 
-        if (bookRepository.findById(id).isPresent()) {
-            BookEntity bookEntity = this.bookRepository.findById(id).orElse(new BookEntity());
-            bookEntity.setBookAuthors(updateBook.getBookAuthors());
-            bookEntity.setName(updateBook.getName());
-            this.bookRepository.save(bookEntity);
-        } else {
-            BookEntity bookEntity = new BookEntity();
-            bookEntity.setBookAuthors(updateBook.getBookAuthors());
-            bookEntity.setName(updateBook.getName());
-            this.bookRepository.save(bookEntity);
+        bookEntity.setBookAuthors(updateBook.getBookAuthors());
+        bookEntity.setName(updateBook.getName());
 
+        this.bookRepository.save(bookEntity);
 
-        }
     }
 
     @Override

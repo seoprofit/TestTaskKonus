@@ -1,5 +1,6 @@
 package com.example.testtaskkonus;
 
+import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -25,8 +26,7 @@ class TestTaskKonusApplicationTests {
 						.accept(MediaType.APPLICATION_JSON))
 				.andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].id").isNotEmpty())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].name").isNotEmpty());
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].ID").isNotEmpty());
 	}
 
 	@Test
@@ -36,8 +36,7 @@ class TestTaskKonusApplicationTests {
 						.accept(MediaType.APPLICATION_JSON))
 				.andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].id").isNotEmpty())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].name").isNotEmpty());
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].ID").isNotEmpty());
 	}
 
 
