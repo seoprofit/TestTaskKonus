@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.event.annotation.BeforeTestClass;
+import org.springframework.test.context.event.annotation.BeforeTestMethod;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -43,7 +44,7 @@ class TestTaskKonusApplicationTests {
     @BeforeEach
     public void addAuthor() {
         AuthorEntity authorEntity = new AuthorEntity();
-        authorEntity.setName("Book 1");
+        authorEntity.setName("Author 1");
         authorRepository.save(authorEntity);
 
     }

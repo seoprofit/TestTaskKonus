@@ -21,7 +21,7 @@ services:
     networks:
       - libraryNetwork
     volumes:
-      - /home/develop/Desktop/code/Java/TestTask/TestTaskKonus/target/TestTaskKonus-0.0.1-SNAPSHOT.jarпе:/opt/library.jar
+      - /home/develop/Desktop/code/Java/TestTask/TestTaskKonus/target/TestTaskKonus-0.0.1-SNAPSHOT.jar:/opt/library.jar
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/library
       - SPRING_DATASOURCE_USERNAME=test_task_login
